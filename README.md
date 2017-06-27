@@ -61,3 +61,6 @@ uid=0(root) gid=0(root) groups=0(root),1(bin),2(daemon),3(sys),4(adm),6(disk),10
 [06-26-17 11:11:57] #0  173.239.230.96  INVALID testuser        somewr0ng!pa55word
 [06-26-17 11:08:11] #0  173.239.230.96  VALID   testuser        passw0rd
 ```
+
+# Licenses
+`dns-server.py` is a fork of https://github.com/pathes/fakedns by @pathes
