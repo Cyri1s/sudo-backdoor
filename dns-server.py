@@ -198,7 +198,7 @@ if __name__ == '__main__':
 
     logging.basicConfig(level=logging.DEBUG if args.verbose else logging.INFO,
                         format='[%(asctime)s] %(message)s',
-                        datefmt='%m-%d-%y %H:%M:%S')
+                        datefmt='%d-%m-%y %H:%M:%S')
 
     logger = logging.getLogger(__name__)
 
